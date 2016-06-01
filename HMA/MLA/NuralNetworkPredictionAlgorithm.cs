@@ -1,22 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
-using Encog.Engine.Network.Activation;
-using Encog.ML.Data;
+﻿using Encog.ML.Data;
 using Encog.ML.Data.Basic;
 using Encog.ML.Data.Temporal;
 using Encog.Neural.Networks;
 using Encog.Neural.Networks.Layers;
-using Encog.Neural.Networks.Training;
 using Encog.Neural.Networks.Training.Lma;
-using Encog.Neural.Networks.Training.Propagation.Back;
-using Encog.Neural.Networks.Training.Propagation.Resilient;
 using Encog.Util;
-using Encog.Util.Arrayutil;
-using MathNet.Numerics.Financial;
 using MathNet.Numerics.Statistics;
 
 namespace HMA.MLA
@@ -29,7 +17,7 @@ namespace HMA.MLA
         public int EvaluateStart;
         public BasicNetwork network;
 
-        public const double MaxError = 0.001;
+        public const double MaxError = 0.0001;
 
         private double _predictedValue= 0.0;
 

@@ -34,6 +34,8 @@ namespace HMA
       {
         _dataRepository.SaveData(_list);
       };
+
+        comboBox1.SelectedIndex = 0;
     }
 
     private void PrepareDataTable()
@@ -85,19 +87,40 @@ namespace HMA
       _list.Add(model);
     }
 
-    private List<ComingHomeModel> GetAllModelForWeekday()
+    private List<ComingHomeModel> GetAllModelForWeekday(string weekDayText)
     {
-      var day = DateTime.Now.DayOfWeek;
+      var day = GetWeekDay(weekDayText);
       var listOdWeekDay = _list.Where(x => x.Date.DayOfWeek == day);
       return listOdWeekDay.ToList();
     }
 
-    private void bExecuteAlgorthm_Click(object sender, EventArgs e)
+      private DayOfWeek GetWeekDay(string weekDayText)
+      {
+          if(weekDayText.Equals("Poniedziałek"))
+                return DayOfWeek.Monday;
+            if (weekDayText.Equals("Wtorek"))
+                return DayOfWeek.Tuesday;
+            if (weekDayText.Equals("Środa"))
+                return DayOfWeek.Wednesday;
+            if (weekDayText.Equals("Czwartek"))
+                return DayOfWeek.Thursday;
+            if (weekDayText.Equals("Piątek"))
+                return DayOfWeek.Friday;
+            if (weekDayText.Equals("Sobota"))
+                return DayOfWeek.Saturday;
+            if (weekDayText.Equals("Niedziela"))
+                return DayOfWeek.Sunday;
+
+          throw new Exception("nie wybrano dnia tygodnia");
+      }
+
+      private void bExecuteAlgorthm_Click(object sender, EventArgs e)
       {
           tbPredictedValue.Text = "";
+          var selectedWeekday = comboBox1.SelectedItem.ToString();
           Thread neuralThread = new Thread(x =>
           {
-              var list = GetAllModelForWeekday();
+              var list = GetAllModelForWeekday(selectedWeekday);
               var takeNumber = HowManyTake(list.Count);
               var comeHomingValues =
                   list.OrderByDescending(u => u.Date)
@@ -147,7 +170,7 @@ namespace HMA
         private void bLienearRegression_Click(object sender, EventArgs e)
         {
             tBAnimaPredictedValue.Text = "";
-            var list = GetAllModelForWeekday();
+            var list = GetAllModelForWeekday(comboBox1.SelectedItem.ToString());
             var takeNumber = list.Count;
             var comeHomingValues =
                 list.OrderByDescending(u => u.Date)
@@ -169,6 +192,12 @@ namespace HMA
             LinearRegression.Execute(xs,comeHomingHourValues,1, takeNumber-1, out r, out yintercept,out slope);
             double predictionValue = slope*(value + 0.1) + yintercept;
             AppendTextBox(TimeConverter.ConvertFromDoubleToDateTime(predictionValue).ToString(), tBAnimaPredictedValue);
+        }
+
+        private void bImOut_Click(object sender, EventArgs e)
+        {
+            bLienearRegression_Click(sender, e);
+            bExecuteAlgorthm_Click(sender, e);
         }
     }
 }
