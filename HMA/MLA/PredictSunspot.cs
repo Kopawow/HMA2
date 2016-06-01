@@ -78,32 +78,7 @@ namespace HMA.MLA
         private double[] _closedLoopSunspots;
         private double[] _normalizedSunspots;
 
-        //public static ExampleInfo Info
-        //{
-        //    get
-        //    {
-        //        var info = new ExampleInfo(
-        //            typeof(PredictSunspot),
-        //            "sunspot",
-        //            "Predict sunspots.",
-        //            "Use a feedforward neural network to predict sunspots.");
-        //        return info;
-        //    }
-        //}
-
-        #region IExample Members
-
-        public void Execute()
-        {
-            NormalizeSunspots(0.1, 0.9);
-            BasicNetwork network = CreateNetwork();
-            IMLDataSet training = GenerateTraining();
-            Train(network, training);
-            Predict(network);
-        }
-
-        #endregion
-
+ 
         public void NormalizeSunspots(double lo, double hi)
         {
             var norm = new NormalizeArray { NormalizedHigh = hi, NormalizedLow = lo };

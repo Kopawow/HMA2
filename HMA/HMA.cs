@@ -98,11 +98,21 @@ namespace HMA
           Thread neuralThread = new Thread(x =>
           {
               var list = GetAllModelForWeekday();
+              var takeNumber = HowManyTake(list.Count);
               var comeHomingValues =
                   list.OrderByDescending(u => u.Date)
                       .Select(z => new TimeSpan(0, int.Parse(z.Hour), int.Parse(z.Minutes), 0))
-                      .Take(50)
+                      .Take(takeNumber)
                       .ToList();
+              if (takeNumber < 40)
+              {
+                  var random = new Random();
+                  for (int i = takeNumber; i < 40; i++)
+                  {
+                      comeHomingValues.Add(comeHomingValues[random.Next(takeNumber)]);
+                  }
+                  
+              }
               var comeHomingHourValues =
                   comeHomingValues.Select(y => TimeConverter.ConvertFromTimeToDouble(y.TotalMinutes)).ToArray();
              
@@ -118,6 +128,12 @@ namespace HMA
           neuralThread.Start();
       }
 
+      private int HowManyTake(int count)
+      {
+          var howManyTens = count/10;
+          return 10*howManyTens;
+      }
+
       public void AppendTextBox(string value,TextBox tb)
     {
         if (InvokeRequired)
@@ -128,16 +144,17 @@ namespace HMA
         tb.Text += value;
     }
 
-        private void bAnima_Click(object sender, EventArgs e)
+        private void bLienearRegression_Click(object sender, EventArgs e)
         {
             tBAnimaPredictedValue.Text = "";
             var list = GetAllModelForWeekday();
+            var takeNumber = list.Count;
             var comeHomingValues =
                 list.OrderByDescending(u => u.Date)
                     .Select(z => new TimeSpan(0, int.Parse(z.Hour), int.Parse(z.Minutes), 0))
-                    .Take(50)
+                    .Take(takeNumber)
                     .ToList();
-            double[] xs = new double[50];
+            double[] xs = new double[takeNumber];
             double value = 0.1;
             for (var i = 0 ; i<xs.Length;i++)
             {
@@ -149,7 +166,7 @@ namespace HMA
             double r;
             double yintercept;
             double slope;
-            LinearRegression.Execute(xs,comeHomingHourValues,1,49,out r, out yintercept,out slope);
+            LinearRegression.Execute(xs,comeHomingHourValues,1, takeNumber-1, out r, out yintercept,out slope);
             double predictionValue = slope*(value + 0.1) + yintercept;
             AppendTextBox(TimeConverter.ConvertFromDoubleToDateTime(predictionValue).ToString(), tBAnimaPredictedValue);
         }

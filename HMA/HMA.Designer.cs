@@ -177,9 +177,9 @@
             this.bAnima.Name = "bAnima";
             this.bAnima.Size = new System.Drawing.Size(100, 23);
             this.bAnima.TabIndex = 14;
-            this.bAnima.Text = "Wykonaj ANIMA";
+            this.bAnima.Text = "Wykonaj RL";
             this.bAnima.UseVisualStyleBackColor = true;
-            this.bAnima.Click += new System.EventHandler(this.bAnima_Click);
+            this.bAnima.Click += new System.EventHandler(this.bLienearRegression_Click);
             // 
             // HMA
             // 

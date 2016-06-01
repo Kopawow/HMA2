@@ -11,10 +11,13 @@ using Encog.ML.Data.Temporal;
 using Encog.Neural.Networks;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.Networks.Training;
+using Encog.Neural.Networks.Training.Lma;
 using Encog.Neural.Networks.Training.Propagation.Back;
 using Encog.Neural.Networks.Training.Propagation.Resilient;
 using Encog.Util;
 using Encog.Util.Arrayutil;
+using MathNet.Numerics.Financial;
+using MathNet.Numerics.Statistics;
 
 namespace HMA.MLA
 {
@@ -26,7 +29,7 @@ namespace HMA.MLA
         public int EvaluateStart;
         public BasicNetwork network;
 
-        public const double MaxError = 0.01;
+        public const double MaxError = 0.001;
 
         private double _predictedValue= 0.0;
 
@@ -53,24 +56,22 @@ namespace HMA.MLA
 
         public void Execute()
         {
-            NormalizeSunspots(0.1, 1);
-            network = CreateNetwork();
+            NormalizeSunspots(0.01, 1);
+            CreateNetwork();
             IMLDataSet training = GenerateTraining();
-            Train(network, training);
+            Train(training);
         }
 
         public void PredictValue()
         {
-            Predict(network);
+            Predict();
         }
 
         #endregion
 
         public void NormalizeSunspots(double lo, double hi)
         {
-            var norm = new NormalizeArray { NormalizedHigh = hi, NormalizedLow = lo };
-
-            _normalizedArray = norm.Process(_comeHomeHoursValues);
+            _normalizedArray = _comeHomeHoursValues;
             _closedLoop = EngineArray.ArrayCopy(_normalizedArray);
         }
 
@@ -89,29 +90,29 @@ namespace HMA.MLA
                 {
                     Sequence = day,
                     Data = {[0] = _normalizedArray[day] }
-                };
+                }; 
                 result.Points.Add(point);
             }
 
             result.Generate();
-
+            
             return result;
         }
 
-        public BasicNetwork CreateNetwork()
+        public void CreateNetwork()
         {
-            var network = new BasicNetwork();
+            network = new BasicNetwork();
             network.AddLayer(new BasicLayer(WindowSize));
-            network.AddLayer(new BasicLayer(1));
+            network.AddLayer(new BasicLayer(10));
             network.AddLayer(new BasicLayer(1));
             network.Structure.FinalizeStructure();
             network.Reset();
-            return network;
+         
         }
 
-        public void Train(BasicNetwork network, IMLDataSet training)
+        public void Train(IMLDataSet training)
         {
-            ITrain train = new ResilientPropagation(network, training);
+            var train = new LevenbergMarquardtTraining(network,training);
 
             do
             {
@@ -119,11 +120,11 @@ namespace HMA.MLA
             } while (train.Error > MaxError);
         }
 
-        public void Predict(BasicNetwork network)
+        public void Predict()
         {
-            double closedLoopPrediction= 0.0;
-            double prediction = 0.0;
-            for (int day = TrainStart; day < EvaluateEnd; day++)
+            double[] closedLoopPrediction= new double[10];
+            double[] prediction = new double[10];
+            for (int day = EvaluateStart; day < EvaluateEnd; day++)
             {
                 var input = new BasicMLData(WindowSize);
                 for (var i = 0; i < input.Count; i++)
@@ -131,22 +132,23 @@ namespace HMA.MLA
                     input[i] = _normalizedArray[(day - WindowSize) + i];
                 }
                 IMLData output = network.Compute(input);
-                prediction = output[0];
-                _closedLoop[day] = prediction;
+                prediction[EvaluateEnd-day] = output[0];
+                _closedLoop[day] = prediction[EvaluateEnd - day];
 
                 for (var i = 0; i < input.Count; i++)
                 {
                     input[i] = _closedLoop[(day - WindowSize) + i];
                 }
                 output = network.Compute(input);
-                 closedLoopPrediction = output[0];
+                 closedLoopPrediction[EvaluateEnd - day] = output[0];
             }
-            _predictedValue = closedLoopPrediction;
+            _predictedValue = closedLoopPrediction.Median();
         }
 
         public double GetPredictedValue()
         {
             return _predictedValue;
         }
+        
     }
 }
