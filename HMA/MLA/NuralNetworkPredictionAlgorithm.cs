@@ -1,4 +1,5 @@
-﻿using Encog.ML.Data;
+﻿using System.Linq;
+using Encog.ML.Data;
 using Encog.ML.Data.Basic;
 using Encog.ML.Data.Temporal;
 using Encog.Neural.Networks;
@@ -130,7 +131,7 @@ namespace HMA.MLA
                 output = network.Compute(input);
                  closedLoopPrediction[EvaluateEnd - day] = output[0];
             }
-            _predictedValue = closedLoopPrediction.Median();
+            _predictedValue = prediction.Where(x=> x != 0).Median();
         }
 
         public double GetPredictedValue()

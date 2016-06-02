@@ -56,7 +56,7 @@ namespace HMA.Repositories
           var hour = p.ToString();
           list.Add(new ComingHomeModel()
             {
-              Date = DateTime.ParseExact(o.ToString(),"dd.MM.yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture),
+              Date = DateTime.ParseExact(o.ToString(),"yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture),
               Hour = hour[0].ToString() + hour[1].ToString(),
               Minutes = hour[3].ToString() + hour[4].ToString()
             });
