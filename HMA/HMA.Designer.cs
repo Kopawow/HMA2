@@ -44,6 +44,7 @@
             this.bRL = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.bImOut = new System.Windows.Forms.Button();
+            this.bChangeHeaterState = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // textBox1
@@ -191,11 +192,22 @@
             this.bImOut.UseVisualStyleBackColor = true;
             this.bImOut.Click += new System.EventHandler(this.bImOut_Click);
             // 
+            // bChangeHeaterState
+            // 
+            this.bChangeHeaterState.Location = new System.Drawing.Point(12, 38);
+            this.bChangeHeaterState.Name = "bChangeHeaterState";
+            this.bChangeHeaterState.Size = new System.Drawing.Size(75, 23);
+            this.bChangeHeaterState.TabIndex = 19;
+            this.bChangeHeaterState.Text = "Zmien stan pieca";
+            this.bChangeHeaterState.UseVisualStyleBackColor = true;
+            this.bChangeHeaterState.Click += new System.EventHandler(this.bChangeHeaterState_Click);
+            // 
             // HMA
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(428, 261);
+            this.Controls.Add(this.bChangeHeaterState);
             this.Controls.Add(this.bImOut);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.tbAnimaStartHeating);
@@ -237,6 +249,7 @@
         private System.Windows.Forms.Button bRL;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Button bImOut;
+        private System.Windows.Forms.Button bChangeHeaterState;
     }
 }
 

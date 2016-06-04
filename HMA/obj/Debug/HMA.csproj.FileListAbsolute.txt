@@ -22,12 +22,10 @@ C:\Users\cieka\Documents\HMA2\HMA\obj\Debug\HMA.exe
 C:\Users\cieka\Documents\HMA2\HMA\obj\Debug\HMA.pdb
 C:\Users\cieka\Documents\HMA2\HMA\bin\Debug\HMA.exe
 C:\Users\cieka\Documents\HMA2\HMA\bin\Debug\HMA.pdb
-C:\Users\cieka\Documents\HMA2\HMA\bin\Debug\DynamicInterop.dll
 C:\Users\cieka\Documents\HMA2\HMA\bin\Debug\encog-core-cs.dll
 C:\Users\cieka\Documents\HMA2\HMA\bin\Debug\MathNet.Numerics.dll
 C:\Users\cieka\Documents\HMA2\HMA\bin\Debug\RDotNet.dll
 C:\Users\cieka\Documents\HMA2\HMA\bin\Debug\RDotNet.NativeLibrary.dll
-C:\Users\cieka\Documents\HMA2\HMA\bin\Debug\DynamicInterop.xml
 C:\Users\cieka\Documents\HMA2\HMA\bin\Debug\MathNet.Numerics.xml
 C:\Users\cieka\Documents\HMA2\HMA\bin\Debug\RDotNet.xml
 C:\Users\cieka\Documents\HMA2\HMA\bin\Debug\RDotNet.NativeLibrary.xml
@@ -51,3 +49,5 @@ C:\Users\Kopa\Documents\HMA2\HMA\bin\Debug\RDotNet.xml
 C:\Users\Kopa\Documents\HMA2\HMA\bin\Debug\RDotNet.NativeLibrary.xml
 C:\Users\Kopa\Documents\HMA2\HMA\obj\Debug\HMA.exe
 C:\Users\Kopa\Documents\HMA2\HMA\obj\Debug\HMA.pdb
+C:\Users\cieka\Documents\HMA2\HMA\bin\Debug\NModbus4.dll
+C:\Users\cieka\Documents\HMA2\HMA\bin\Debug\NModbus4.xml

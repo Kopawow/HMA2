@@ -22,6 +22,7 @@ namespace HMA
 {
   public partial class HMA : Form
   {
+      private bool currentState = true;
     private List<ComingHomeModel> _list = new List<ComingHomeModel>();
     private readonly IWeatherService _weatherService = new WeatherService();
     private readonly IDataRepository _dataRepository= new ExcelRepository();
@@ -198,6 +199,13 @@ namespace HMA
         {
             bLienearRegression_Click(sender, e);
             bExecuteAlgorthm_Click(sender, e);
+        }
+
+        private void bChangeHeaterState_Click(object sender, EventArgs e)
+        {
+            var hs  = new HeaterService();
+            currentState = !currentState;
+            hs.ChangeHeaterState(currentState);
         }
     }
 }
