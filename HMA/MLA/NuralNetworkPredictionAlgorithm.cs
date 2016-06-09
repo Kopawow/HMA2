@@ -18,7 +18,7 @@ namespace HMA.MLA
         public int EvaluateStart;
         public BasicNetwork network;
 
-        public const double MaxError = 0.0001;
+        public const double MaxError = 0.00001;
 
         private double _predictedValue= 0.0;
 

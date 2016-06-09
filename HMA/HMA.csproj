@@ -78,6 +78,7 @@
     <Compile Include="HMA.Designer.cs">
       <DependentUpon>HMA.cs</DependentUpon>
     </Compile>
+    <Compile Include="MLA\Anima.cs" />
     <Compile Include="MLA\LinearRegression.cs" />
     <Compile Include="MLA\NuralNetworkPredictionAlgorithm.cs" />
     <Compile Include="MLA\PredictSunspot.cs" />
