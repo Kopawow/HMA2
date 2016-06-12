@@ -72,7 +72,6 @@
     </Compile>
     <Compile Include="MLA\LinearRegression.cs" />
     <Compile Include="MLA\NuralNetworkPredictionAlgorithm.cs" />
-    <Compile Include="MLA\PredictSunspot.cs" />
     <Compile Include="MLA\WMA.cs" />
     <Compile Include="Models\ComingHomeModel.cs" />
     <Compile Include="Program.cs" />
