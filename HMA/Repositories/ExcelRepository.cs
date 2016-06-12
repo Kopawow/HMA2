@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows.Forms;
 using HMA.Models;
 using HMA.Repositories.Interfaces;
@@ -25,8 +26,9 @@ namespace HMA.Repositories
         xlWorkSheet.Cells[i, j+1] = var.Hour+" "+var.Minutes;
         i++;
       }
-
-      xlWorkBook.SaveAs("testData.xls", Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
+      string fileName = "testData.xls";
+        string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName); 
+      xlWorkBook.SaveAs(path, Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
       xlWorkBook.Close(true, misValue, misValue);
       xlApp.Quit();
 
@@ -37,12 +39,14 @@ namespace HMA.Repositories
 
     public List<ComingHomeModel> GetData()
     {
-      var list = new List<ComingHomeModel>(); 
+     string fileName = "testData.xls";
+     string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
+     var list = new List<ComingHomeModel>(); 
       var rCnt = 0;
       var cCnt = 0;
 
       var xlApp = new Excel.Application();
-      var xlWorkBook = xlApp.Workbooks.Open("testData.xls", 0, true, 5, "", "", true, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
+      var xlWorkBook = xlApp.Workbooks.Open(path, 0, true, 5, "", "", true, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
       var xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
 
       var range = xlWorkSheet.UsedRange;

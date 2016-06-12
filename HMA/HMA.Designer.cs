@@ -40,11 +40,14 @@
             this.tbDemandingTemperature = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.tbAnimaStartHeating = new System.Windows.Forms.TextBox();
-            this.tBAnimaPredictedValue = new System.Windows.Forms.TextBox();
-            this.bRL = new System.Windows.Forms.Button();
+            this.tBRlPredictedValue = new System.Windows.Forms.TextBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.bImOut = new System.Windows.Forms.Button();
             this.bChangeHeaterState = new System.Windows.Forms.Button();
+            this.bRL = new System.Windows.Forms.Button();
+            this.bWma = new System.Windows.Forms.Button();
+            this.tbWma = new System.Windows.Forms.TextBox();
+            this.wbWmaHeatingStart = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // textBox1
@@ -149,22 +152,12 @@
             this.tbAnimaStartHeating.Size = new System.Drawing.Size(100, 20);
             this.tbAnimaStartHeating.TabIndex = 16;
             // 
-            // tBAnimaPredictedValue
+            // tBRlPredictedValue
             // 
-            this.tBAnimaPredictedValue.Location = new System.Drawing.Point(291, 161);
-            this.tBAnimaPredictedValue.Name = "tBAnimaPredictedValue";
-            this.tBAnimaPredictedValue.Size = new System.Drawing.Size(100, 20);
-            this.tBAnimaPredictedValue.TabIndex = 15;
-            // 
-            // bRL
-            // 
-            this.bRL.Location = new System.Drawing.Point(291, 187);
-            this.bRL.Name = "bRL";
-            this.bRL.Size = new System.Drawing.Size(100, 23);
-            this.bRL.TabIndex = 14;
-            this.bRL.Text = "Wykonaj RL";
-            this.bRL.UseVisualStyleBackColor = true;
-            this.bRL.Click += new System.EventHandler(this.bLienearRegression_Click);
+            this.tBRlPredictedValue.Location = new System.Drawing.Point(291, 161);
+            this.tBRlPredictedValue.Name = "tBRlPredictedValue";
+            this.tBRlPredictedValue.Size = new System.Drawing.Size(100, 20);
+            this.tBRlPredictedValue.TabIndex = 15;
             // 
             // comboBox1
             // 
@@ -202,16 +195,53 @@
             this.bChangeHeaterState.UseVisualStyleBackColor = true;
             this.bChangeHeaterState.Click += new System.EventHandler(this.bChangeHeaterState_Click);
             // 
+            // bRL
+            // 
+            this.bRL.Location = new System.Drawing.Point(291, 187);
+            this.bRL.Name = "bRL";
+            this.bRL.Size = new System.Drawing.Size(100, 23);
+            this.bRL.TabIndex = 14;
+            this.bRL.Text = "Wykonaj RL";
+            this.bRL.UseVisualStyleBackColor = true;
+            this.bRL.Click += new System.EventHandler(this.bLienearRegression_Click);
+            // 
+            // bWma
+            // 
+            this.bWma.Location = new System.Drawing.Point(407, 187);
+            this.bWma.Name = "bWma";
+            this.bWma.Size = new System.Drawing.Size(100, 23);
+            this.bWma.TabIndex = 20;
+            this.bWma.Text = "Wykonaj WMA";
+            this.bWma.UseVisualStyleBackColor = true;
+            this.bWma.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // tbWma
+            // 
+            this.tbWma.Location = new System.Drawing.Point(407, 161);
+            this.tbWma.Name = "tbWma";
+            this.tbWma.Size = new System.Drawing.Size(100, 20);
+            this.tbWma.TabIndex = 21;
+            // 
+            // wbWmaHeatingStart
+            // 
+            this.wbWmaHeatingStart.Location = new System.Drawing.Point(407, 135);
+            this.wbWmaHeatingStart.Name = "wbWmaHeatingStart";
+            this.wbWmaHeatingStart.Size = new System.Drawing.Size(100, 20);
+            this.wbWmaHeatingStart.TabIndex = 22;
+            // 
             // HMA
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(428, 261);
+            this.ClientSize = new System.Drawing.Size(519, 261);
+            this.Controls.Add(this.wbWmaHeatingStart);
+            this.Controls.Add(this.tbWma);
+            this.Controls.Add(this.bWma);
             this.Controls.Add(this.bChangeHeaterState);
             this.Controls.Add(this.bImOut);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.tbAnimaStartHeating);
-            this.Controls.Add(this.tBAnimaPredictedValue);
+            this.Controls.Add(this.tBRlPredictedValue);
             this.Controls.Add(this.bRL);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.tbDemandingTemperature);
@@ -245,11 +275,14 @@
         private System.Windows.Forms.TextBox tbDemandingTemperature;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox tbAnimaStartHeating;
-        private System.Windows.Forms.TextBox tBAnimaPredictedValue;
-        private System.Windows.Forms.Button bRL;
+        private System.Windows.Forms.TextBox tBRlPredictedValue;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Button bImOut;
         private System.Windows.Forms.Button bChangeHeaterState;
+        private System.Windows.Forms.Button bRL;
+        private System.Windows.Forms.Button bWma;
+        private System.Windows.Forms.TextBox tbWma;
+        private System.Windows.Forms.TextBox wbWmaHeatingStart;
     }
 }
 

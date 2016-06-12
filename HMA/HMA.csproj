@@ -49,14 +49,6 @@
       <HintPath>..\packages\NModbus4.2.1.0\lib\net40\NModbus4.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="RDotNet, Version=1.5.5.0, Culture=neutral, PublicKeyToken=5f72f6e23c6920d4, processorArchitecture=MSIL">
-      <HintPath>..\packages\R.NET.1.5.5\lib\net40\RDotNet.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="RDotNet.NativeLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=5f72f6e23c6920d4, processorArchitecture=MSIL">
-      <HintPath>..\packages\R.NET.1.5.5\lib\net40\RDotNet.NativeLibrary.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
@@ -78,10 +70,10 @@
     <Compile Include="HMA.Designer.cs">
       <DependentUpon>HMA.cs</DependentUpon>
     </Compile>
-    <Compile Include="MLA\Anima.cs" />
     <Compile Include="MLA\LinearRegression.cs" />
     <Compile Include="MLA\NuralNetworkPredictionAlgorithm.cs" />
     <Compile Include="MLA\PredictSunspot.cs" />
+    <Compile Include="MLA\WMA.cs" />
     <Compile Include="Models\ComingHomeModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

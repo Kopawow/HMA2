@@ -170,35 +170,42 @@ namespace HMA
 
         private void bLienearRegression_Click(object sender, EventArgs e)
         {
-            tBAnimaPredictedValue.Text = "";
-            var list = GetAllModelForWeekday(comboBox1.SelectedItem.ToString());
-            var takeNumber = list.Count;
-            var comeHomingValues =
-                list.OrderByDescending(u => u.Date)
-                    .Select(z => new TimeSpan(0, int.Parse(z.Hour), int.Parse(z.Minutes), 0))
-                    .Take(takeNumber)
-                    .ToList();
-            double[] xs = new double[takeNumber];
-            double value = 0.1;
-            for (var i = 0 ; i<xs.Length;i++)
+            tBRlPredictedValue.Text = "";
+            var selectedWeekday = comboBox1.SelectedItem.ToString();
+            Thread linearThread = new Thread(x =>
             {
-                xs[i] = value ;
-                value += 0.1;
-            }
-            var comeHomingHourValues =
-                comeHomingValues.Select(y => TimeConverter.ConvertFromTimeToDouble(y.TotalMinutes)).ToArray();
-            double r;
-            double yintercept;
-            double slope;
-            LinearRegression.Execute(xs,comeHomingHourValues,1, takeNumber-1, out r, out yintercept,out slope);
-            double predictionValue = slope*(value + 0.1) + yintercept;
-            AppendTextBox(TimeConverter.ConvertFromDoubleToDateTime(predictionValue).ToString(), tBAnimaPredictedValue);
+                var list = GetAllModelForWeekday(selectedWeekday);
+                var takeNumber = list.Count;
+                var comeHomingValues =
+                    list.OrderByDescending(u => u.Date)
+                        .Select(z => new TimeSpan(0, int.Parse(z.Hour), int.Parse(z.Minutes), 0))
+                        .Take(takeNumber)
+                        .ToList();
+                double[] xs = new double[takeNumber];
+                double value = 0.1;
+                for (var i = 0; i < xs.Length; i++)
+                {
+                    xs[i] = value;
+                    value += 0.1;
+                }
+                var comeHomingHourValues =
+                    comeHomingValues.Select(y => TimeConverter.ConvertFromTimeToDouble(y.TotalMinutes)).ToArray();
+                double r;
+                double yintercept;
+                double slope;
+                LinearRegression.Execute(xs, comeHomingHourValues, 1, takeNumber - 1, out r, out yintercept, out slope);
+                double predictionValue = slope*(value + 0.1) + yintercept;
+                AppendTextBox(TimeConverter.ConvertFromDoubleToDateTime(predictionValue).ToString(), tBRlPredictedValue);
+            });
+            linearThread.Start();
+
         }
 
         private void bImOut_Click(object sender, EventArgs e)
         {
             bLienearRegression_Click(sender, e);
             bExecuteAlgorthm_Click(sender, e);
+            button1_Click(sender, e);
         }
 
         private void bChangeHeaterState_Click(object sender, EventArgs e)
@@ -206,6 +213,29 @@ namespace HMA
             var hs  = new HeaterService();
             currentState = !currentState;
             hs.ChangeHeaterState(currentState);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            tbWma.Text = "";
+            var selectedWeekday = comboBox1.SelectedItem.ToString();
+            Thread wmaThread = new Thread(x =>
+            {
+                var list = GetAllModelForWeekday(selectedWeekday);
+                var takeNumber = list.Count;
+                var comeHomingValues =
+                    list.OrderByDescending(u => u.Date)
+                        .Select(z => new TimeSpan(0, int.Parse(z.Hour), int.Parse(z.Minutes), 0))
+                        .Take(takeNumber)
+                        .ToList();
+
+                var prediction =
+                    WMA.WeightedMovingAverage(
+                        comeHomingValues.Select(y => TimeConverter.ConvertFromTimeToDouble(y.TotalMinutes)).ToArray(), 1,
+                        (Double) 0.05, (Double) 0.15, (Double) 0.20, (Double) 0.25, 0, (Double) 0.35);
+                AppendTextBox(TimeConverter.ConvertFromDoubleToDateTime(prediction.Value).ToString(), tbWma);
+            });
+            wmaThread.Start();
         }
     }
 }
