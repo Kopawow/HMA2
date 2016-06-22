@@ -41,10 +41,10 @@ namespace HMA.Services
             }
         }
 
-      public static TimeSpan CalculateHeaterUseTime(double heaterEfficiency,double heaterPower, double powerNecessary)
+      public static TimeSpan CalculateHeaterUseTime(double heaterEfficiency,double heaterPower, double powerNecessary,double loss)
       {
         double time = (powerNecessary/heaterEfficiency)/heaterPower;
-        var compensation = time*13500/1000;
+        var compensation = time*loss/1000;
         var neededTime = (compensation + powerNecessary)/heaterEfficiency/heaterPower;
         var timeValue = TimeSpan.FromSeconds(neededTime);
         return timeValue;

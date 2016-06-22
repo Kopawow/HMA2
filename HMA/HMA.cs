@@ -219,15 +219,15 @@ namespace HMA
       var valueAnn = TimeSpan.Parse(tbPredictedValue.Text, CultureInfo.InvariantCulture);
       var newValue = new TimeSpan(0,valueAnn.Minutes,valueAnn.Seconds,0);
       tbHeatingStart.Text ="00:"+
-        TimeSpan.FromSeconds(newValue.TotalSeconds-HeaterService.CalculateHeaterUseTime(0.8, 20, 17100).TotalSeconds);
+        TimeSpan.FromSeconds(newValue.TotalSeconds-HeaterService.CalculateHeaterUseTime(0.8, 20, 17100,13500).TotalSeconds);
       var valueWma = TimeSpan.Parse(tbWma.Text, CultureInfo.InvariantCulture);
       var newValueWma = new TimeSpan(0, valueWma.Minutes, valueWma.Seconds, 0);
       tbWmaHeatingStart.Text = "00:" +
-        TimeSpan.FromSeconds(newValueWma.TotalSeconds - HeaterService.CalculateHeaterUseTime(0.8, 20, 17100).TotalSeconds);
+        TimeSpan.FromSeconds(newValueWma.TotalSeconds - HeaterService.CalculateHeaterUseTime(0.8, 20, 17100,13500).TotalSeconds);
       var valueRl = TimeSpan.Parse(tbWma.Text, CultureInfo.InvariantCulture);
       var newValueRl = new TimeSpan(0, valueRl.Minutes, valueRl.Seconds, 0);
       tbRlStartHeating.Text = "00:" +
-        TimeSpan.FromSeconds(newValueRl.TotalSeconds - HeaterService.CalculateHeaterUseTime(0.8, 20, 17100).TotalSeconds);
+        TimeSpan.FromSeconds(newValueRl.TotalSeconds - HeaterService.CalculateHeaterUseTime(0.8, 20, 17100,13500).TotalSeconds);
     }
 
     private void bChangeHeaterState_Click(object sender, EventArgs e)
