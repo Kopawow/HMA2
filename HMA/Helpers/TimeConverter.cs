@@ -10,7 +10,7 @@ namespace HMA.Helpers
             return Math.Round(result,5);
         }
 
-        public static TimeSpan ConvertFromDoubleToDateTime(double value)
+        public static TimeSpan ConvertFromDoubleToTime(double value)
         {
             var minutes = (value)*1440.0;
 

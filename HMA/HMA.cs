@@ -22,11 +22,12 @@ namespace HMA
 {
   public partial class HMA : Form
   {
-      private bool currentState = true;
+    private string selectedWeekday;
+    private bool currentState = true;
     private List<ComingHomeModel> _list = new List<ComingHomeModel>();
     private readonly IWeatherService _weatherService = new WeatherService();
     private readonly IDataRepository _dataRepository= new ExcelRepository();
-      private NuralNetworkPredictionAlgorithm _predict;
+    private NuralNetworkPredictionAlgorithm _predict;
     public HMA()
     {
       InitializeComponent();
@@ -118,41 +119,41 @@ namespace HMA
       private void bExecuteAlgorthm_Click(object sender, EventArgs e)
       {
           tbPredictedValue.Text = "";
-          var selectedWeekday = comboBox1.SelectedItem.ToString();
-          Thread neuralThread = new Thread(x =>
-          {
-              var list = GetAllModelForWeekday(selectedWeekday);
-              var takeNumber = HowManyTake(list.Count);
-              var comeHomingValues =
-                  list.OrderByDescending(u => u.Date)
-                      .Select(z => new TimeSpan(0, int.Parse(z.Hour), int.Parse(z.Minutes), 0))
-                      .Take(takeNumber)
-                      .ToList();
-              if (takeNumber < 40)
-              {
-                  var random = new Random();
-                  for (int i = takeNumber; i < 40; i++)
-                  {
-                      comeHomingValues.Add(comeHomingValues[random.Next(takeNumber)]);
-                  }
-                  
-              }
-              var comeHomingHourValues =
-                  comeHomingValues.Select(y => TimeConverter.ConvertFromTimeToDouble(y.TotalMinutes)).ToArray();
-             
-                  _predict = new NuralNetworkPredictionAlgorithm(comeHomingHourValues);
-                  _predict.Execute();
-              
-
-              _predict.PredictValue();
-              
-              AppendTextBox(TimeConverter.ConvertFromDoubleToDateTime(_predict.GetPredictedValue()).ToString(),tbPredictedValue);
-          });
-
-          neuralThread.Start();
+      selectedWeekday = comboBox1.SelectedItem.ToString();
+      RunANN();
       }
 
-      private int HowManyTake(int count)
+    private void RunANN()
+    {
+          var list = GetAllModelForWeekday(selectedWeekday);
+          var takeNumber = HowManyTake(list.Count);
+          var comeHomingValues =
+              list.OrderByDescending(u => u.Date)
+                  .Select(z => new TimeSpan(0, int.Parse(z.Hour), int.Parse(z.Minutes), 0))
+                  .Take(takeNumber)
+                  .ToList();
+          if (takeNumber < 40)
+          {
+            var random = new Random();
+            for (int i = takeNumber; i < 40; i++)
+            {
+              comeHomingValues.Add(comeHomingValues[random.Next(takeNumber)]);
+            }
+
+          }
+          var comeHomingHourValues =
+              comeHomingValues.Select(y => TimeConverter.ConvertFromTimeToDouble(y.TotalMinutes)).ToArray();
+
+          _predict = new NuralNetworkPredictionAlgorithm(comeHomingHourValues);
+          _predict.Execute();
+
+
+          _predict.PredictValue();
+
+          AppendTextBox(TimeConverter.ConvertFromDoubleToTime(_predict.GetPredictedValue()).ToString(), tbPredictedValue);
+    }
+
+    private int HowManyTake(int count)
       {
           var howManyTens = count/10;
           return 10*howManyTens;
@@ -171,41 +172,59 @@ namespace HMA
         private void bLienearRegression_Click(object sender, EventArgs e)
         {
             tBRlPredictedValue.Text = "";
-            var selectedWeekday = comboBox1.SelectedItem.ToString();
-            Thread linearThread = new Thread(x =>
-            {
-                var list = GetAllModelForWeekday(selectedWeekday);
-                var takeNumber = list.Count;
-                var comeHomingValues =
-                    list.OrderByDescending(u => u.Date)
-                        .Select(z => new TimeSpan(0, int.Parse(z.Hour), int.Parse(z.Minutes), 0))
-                        .Take(takeNumber)
-                        .ToList();
-                double[] xs = new double[takeNumber];
-                double value = 0.1;
-                for (var i = 0; i < xs.Length; i++)
-                {
-                    xs[i] = value;
-                    value += 0.1;
-                }
-                var comeHomingHourValues =
-                    comeHomingValues.Select(y => TimeConverter.ConvertFromTimeToDouble(y.TotalMinutes)).ToArray();
-                double r;
-                double yintercept;
-                double slope;
-                LinearRegression.Execute(xs, comeHomingHourValues, 1, takeNumber - 1, out r, out yintercept, out slope);
-                double predictionValue = slope*(value + 0.1) + yintercept;
-                AppendTextBox(TimeConverter.ConvertFromDoubleToDateTime(predictionValue).ToString(), tBRlPredictedValue);
-            });
-            linearThread.Start();
+           selectedWeekday = comboBox1.SelectedItem.ToString();
+          RunRl();
 
         }
 
-        private void bImOut_Click(object sender, EventArgs e)
+    private void RunRl()
+    {
+      
+        var list = GetAllModelForWeekday(selectedWeekday);
+        var takeNumber = list.Count;
+        var comeHomingValues =
+            list.OrderByDescending(u => u.Date)
+                .Select(z => new TimeSpan(0, int.Parse(z.Hour), int.Parse(z.Minutes), 0))
+                .Take(takeNumber)
+                .ToList();
+        double[] xs = new double[takeNumber];
+        double value = 0.1;
+        for (var i = 0; i < xs.Length; i++)
         {
-            bLienearRegression_Click(sender, e);
-            bExecuteAlgorthm_Click(sender, e);
-            button1_Click(sender, e);
+          xs[i] = value;
+          value += 0.1;
+        }
+        var comeHomingHourValues =
+            comeHomingValues.Select(y => TimeConverter.ConvertFromTimeToDouble(y.TotalMinutes)).ToArray();
+        double r;
+        double yintercept;
+        double slope;
+        LinearRegression.Execute(xs, comeHomingHourValues, 1, takeNumber - 1, out r, out yintercept, out slope);
+        double predictionValue = slope * (value + 0.1) + yintercept;
+        AppendTextBox(TimeConverter.ConvertFromDoubleToTime(predictionValue).ToString(), tBRlPredictedValue);
+    }
+
+    private void bImOut_Click(object sender, EventArgs e)
+        {
+            selectedWeekday = comboBox1.SelectedItem.ToString();
+            
+            var doPredictionsTask = new Task(() =>
+            {
+              try
+              {
+                RunRl();
+                RunANN();
+                RunWma();
+              }
+              catch (Exception ex)
+              {
+                MessageBox.Show(ex.Message);
+              }
+            });
+          doPredictionsTask.Start();
+          doPredictionsTask.Wait();
+          
+          tbHeatingStart.Text = (TimeSpan.Parse(tbPredictedValue.Text,CultureInfo.InvariantCulture)-HeaterService.CalculateHeaterUseTime(0.8, 20, 17500)).ToString();
         }
 
         private void bChangeHeaterState_Click(object sender, EventArgs e)
@@ -217,25 +236,28 @@ namespace HMA
 
         private void button1_Click(object sender, EventArgs e)
         {
-            tbWma.Text = "";
-            var selectedWeekday = comboBox1.SelectedItem.ToString();
-            Thread wmaThread = new Thread(x =>
-            {
-                var list = GetAllModelForWeekday(selectedWeekday);
-                var takeNumber = list.Count;
-                var comeHomingValues =
-                    list.OrderByDescending(u => u.Date)
-                        .Select(z => new TimeSpan(0, int.Parse(z.Hour), int.Parse(z.Minutes), 0))
-                        .Take(takeNumber)
-                        .ToList();
-
-                var prediction =
-                    WMA.WeightedMovingAverage(
-                        comeHomingValues.Select(y => TimeConverter.ConvertFromTimeToDouble(y.TotalMinutes)).ToArray(), 1,
-                        (Double) 0.05, (Double) 0.15, (Double) 0.20, (Double) 0.25, 0, (Double) 0.35);
-                AppendTextBox(TimeConverter.ConvertFromDoubleToDateTime(prediction.Value).ToString(), tbWma);
-            });
-            wmaThread.Start();
+           selectedWeekday = comboBox1.SelectedItem.ToString();
+           RunWma();
         }
+
+
+    private void RunWma()
+    {
+      tbWma.Text = "";
+      
+        var list = GetAllModelForWeekday(selectedWeekday);
+        var takeNumber = list.Count;
+        var comeHomingValues =
+            list.OrderByDescending(u => u.Date)
+                .Select(z => new TimeSpan(0, int.Parse(z.Hour), int.Parse(z.Minutes), 0))
+                .Take(takeNumber)
+                .ToList();
+
+        var prediction =
+            WMA.WeightedMovingAverage(
+                comeHomingValues.Select(y => TimeConverter.ConvertFromTimeToDouble(y.TotalMinutes)).ToArray(), 1,
+                (Double)0.05, (Double)0.15, (Double)0.20, (Double)0.25, 0, (Double)0.35);
+        AppendTextBox(TimeConverter.ConvertFromDoubleToTime(prediction.Value).ToString(), tbWma);
     }
+  }
 }
