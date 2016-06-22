@@ -119,7 +119,7 @@ namespace HMA
       var takeNumber = HowManyTake(list.Count);
       var comeHomingValues =
         list.OrderByDescending(u => u.Date)
-          .Select(z => new TimeSpan(0, int.Parse(z.Hour), int.Parse(z.Minutes), 0))
+          .Select(z => new TimeSpan(0,int.Parse(z.Hour), int.Parse(z.Minutes), 0))
           .Take(takeNumber)
           .ToList();
       if (takeNumber < 40)
@@ -193,6 +193,9 @@ namespace HMA
 
     private void bImOut_Click(object sender, EventArgs e)
     {
+      tbWma.Text = "";
+      tBRlPredictedValue.Text = "";
+      tbPredictedValue.Text = "";
       selectedWeekday = comboBox1.SelectedItem.ToString();
 
       var doPredictionsTask = new Task(() =>
@@ -213,9 +216,18 @@ namespace HMA
       AppendTextBox(TimeConverter.ConvertFromDoubleToTime(_predictWma).ToString(), tbWma);
       AppendTextBox(TimeConverter.ConvertFromDoubleToTime(_predictRL).ToString(), tBRlPredictedValue);
       AppendTextBox(TimeConverter.ConvertFromDoubleToTime(_predictANN).ToString(), tbPredictedValue);
-      tbHeatingStart.Text =
-        (TimeSpan.Parse(tbPredictedValue.Text, CultureInfo.InvariantCulture) -
-         HeaterService.CalculateHeaterUseTime(0.8, 20, 17.5)).ToString();
+      var valueAnn = TimeSpan.Parse(tbPredictedValue.Text, CultureInfo.InvariantCulture);
+      var newValue = new TimeSpan(0,valueAnn.Minutes,valueAnn.Seconds,0);
+      tbHeatingStart.Text ="00:"+
+        TimeSpan.FromSeconds(newValue.TotalSeconds-HeaterService.CalculateHeaterUseTime(0.8, 20, 17100).TotalSeconds);
+      var valueWma = TimeSpan.Parse(tbWma.Text, CultureInfo.InvariantCulture);
+      var newValueWma = new TimeSpan(0, valueWma.Minutes, valueWma.Seconds, 0);
+      tbWmaHeatingStart.Text = "00:" +
+        TimeSpan.FromSeconds(newValueWma.TotalSeconds - HeaterService.CalculateHeaterUseTime(0.8, 20, 17100).TotalSeconds);
+      var valueRl = TimeSpan.Parse(tbWma.Text, CultureInfo.InvariantCulture);
+      var newValueRl = new TimeSpan(0, valueRl.Minutes, valueRl.Seconds, 0);
+      tbRlStartHeating.Text = "00:" +
+        TimeSpan.FromSeconds(newValueRl.TotalSeconds - HeaterService.CalculateHeaterUseTime(0.8, 20, 17100).TotalSeconds);
     }
 
     private void bChangeHeaterState_Click(object sender, EventArgs e)
@@ -228,14 +240,13 @@ namespace HMA
     private void button1_Click(object sender, EventArgs e)
     {
       selectedWeekday = comboBox1.SelectedItem.ToString();
+      tbWma.Text = "";
       RunWma();
     }
 
 
     private void RunWma()
     {
-      tbWma.Text = "";
-
       var list = GetAllModelForWeekday(selectedWeekday);
       var takeNumber = list.Count;
       var comeHomingValues =

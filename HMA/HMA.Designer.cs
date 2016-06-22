@@ -47,7 +47,7 @@
       this.bRL = new System.Windows.Forms.Button();
       this.bWma = new System.Windows.Forms.Button();
       this.tbWma = new System.Windows.Forms.TextBox();
-      this.wbWmaHeatingStart = new System.Windows.Forms.TextBox();
+      this.tbWmaHeatingStart = new System.Windows.Forms.TextBox();
       this.SuspendLayout();
       // 
       // textBox1
@@ -222,19 +222,19 @@
       this.tbWma.Size = new System.Drawing.Size(100, 20);
       this.tbWma.TabIndex = 21;
       // 
-      // wbWmaHeatingStart
+      // tbWmaHeatingStart
       // 
-      this.wbWmaHeatingStart.Location = new System.Drawing.Point(407, 135);
-      this.wbWmaHeatingStart.Name = "wbWmaHeatingStart";
-      this.wbWmaHeatingStart.Size = new System.Drawing.Size(100, 20);
-      this.wbWmaHeatingStart.TabIndex = 22;
+      this.tbWmaHeatingStart.Location = new System.Drawing.Point(407, 135);
+      this.tbWmaHeatingStart.Name = "tbWmaHeatingStart";
+      this.tbWmaHeatingStart.Size = new System.Drawing.Size(100, 20);
+      this.tbWmaHeatingStart.TabIndex = 22;
       // 
       // HMA
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(519, 261);
-      this.Controls.Add(this.wbWmaHeatingStart);
+      this.Controls.Add(this.tbWmaHeatingStart);
       this.Controls.Add(this.tbWma);
       this.Controls.Add(this.bWma);
       this.Controls.Add(this.bChangeHeaterState);
@@ -282,7 +282,7 @@
         private System.Windows.Forms.Button bRL;
         private System.Windows.Forms.Button bWma;
         private System.Windows.Forms.TextBox tbWma;
-        private System.Windows.Forms.TextBox wbWmaHeatingStart;
+        private System.Windows.Forms.TextBox tbWmaHeatingStart;
     }
 }
 
