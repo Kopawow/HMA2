@@ -72,13 +72,13 @@
             this.License.Location = new System.Drawing.Point(12, 229);
             this.License.Name = "License";
             this.License.ReadOnly = true;
-            this.License.Size = new System.Drawing.Size(404, 20);
+            this.License.Size = new System.Drawing.Size(495, 20);
             this.License.TabIndex = 2;
             this.License.Text = "Temperatura pobrana z OpenWeatherMap";
             // 
             // bImHome
             // 
-            this.bImHome.Location = new System.Drawing.Point(349, 8);
+            this.bImHome.Location = new System.Drawing.Point(440, 12);
             this.bImHome.Name = "bImHome";
             this.bImHome.Size = new System.Drawing.Size(67, 53);
             this.bImHome.TabIndex = 3;
@@ -131,10 +131,12 @@
             // 
             // tbDemandingTemperature
             // 
+            this.tbDemandingTemperature.Enabled = false;
             this.tbDemandingTemperature.Location = new System.Drawing.Point(172, 107);
             this.tbDemandingTemperature.Name = "tbDemandingTemperature";
             this.tbDemandingTemperature.Size = new System.Drawing.Size(100, 20);
             this.tbDemandingTemperature.TabIndex = 11;
+            this.tbDemandingTemperature.Text = "21 st C";
             // 
             // label4
             // 
@@ -170,7 +172,7 @@
             "Piątek",
             "Sobota",
             "Niedziela"});
-            this.comboBox1.Location = new System.Drawing.Point(172, 12);
+            this.comboBox1.Location = new System.Drawing.Point(270, 12);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 21);
             this.comboBox1.TabIndex = 17;
@@ -179,7 +181,7 @@
             // 
             this.bImOut.Location = new System.Drawing.Point(12, 8);
             this.bImOut.Name = "bImOut";
-            this.bImOut.Size = new System.Drawing.Size(75, 23);
+            this.bImOut.Size = new System.Drawing.Size(103, 23);
             this.bImOut.TabIndex = 18;
             this.bImOut.Text = "Wychodzę";
             this.bImOut.UseVisualStyleBackColor = true;
@@ -187,9 +189,9 @@
             // 
             // bChangeHeaterState
             // 
-            this.bChangeHeaterState.Location = new System.Drawing.Point(12, 38);
+            this.bChangeHeaterState.Location = new System.Drawing.Point(12, 42);
             this.bChangeHeaterState.Name = "bChangeHeaterState";
-            this.bChangeHeaterState.Size = new System.Drawing.Size(75, 23);
+            this.bChangeHeaterState.Size = new System.Drawing.Size(103, 23);
             this.bChangeHeaterState.TabIndex = 19;
             this.bChangeHeaterState.Text = "Zmien stan pieca";
             this.bChangeHeaterState.UseVisualStyleBackColor = true;
