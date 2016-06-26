@@ -26,11 +26,7 @@ C:\Users\Kopa\Documents\HMA2\HMA\bin\Debug\HMA.exe
 C:\Users\Kopa\Documents\HMA2\HMA\bin\Debug\HMA.pdb
 C:\Users\Kopa\Documents\HMA2\HMA\bin\Debug\encog-core-cs.dll
 C:\Users\Kopa\Documents\HMA2\HMA\bin\Debug\MathNet.Numerics.dll
-C:\Users\Kopa\Documents\HMA2\HMA\bin\Debug\RDotNet.dll
-C:\Users\Kopa\Documents\HMA2\HMA\bin\Debug\RDotNet.NativeLibrary.dll
 C:\Users\Kopa\Documents\HMA2\HMA\bin\Debug\MathNet.Numerics.xml
-C:\Users\Kopa\Documents\HMA2\HMA\bin\Debug\RDotNet.xml
-C:\Users\Kopa\Documents\HMA2\HMA\bin\Debug\RDotNet.NativeLibrary.xml
 C:\Users\Kopa\Documents\HMA2\HMA\obj\Debug\HMA.exe
 C:\Users\Kopa\Documents\HMA2\HMA\obj\Debug\HMA.pdb
 C:\Users\m.kopaczynski\Documents\HMA2\HMA\bin\Debug\HMA.exe.config
@@ -74,3 +70,5 @@ C:\Users\cieka\OneDrive\Dokumenty\HMA2\HMA\bin\Debug\MathNet.Numerics.xml
 C:\Users\cieka\OneDrive\Dokumenty\HMA2\HMA\bin\Debug\NModbus4.xml
 C:\Users\cieka\OneDrive\Dokumenty\HMA2\HMA\obj\Debug\HMA.exe
 C:\Users\cieka\OneDrive\Dokumenty\HMA2\HMA\obj\Debug\HMA.pdb
+C:\Users\Kopa\Documents\HMA2\HMA\bin\Debug\NModbus4.dll
+C:\Users\Kopa\Documents\HMA2\HMA\bin\Debug\NModbus4.xml

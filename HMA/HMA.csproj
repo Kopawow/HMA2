@@ -63,6 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HeatDemand\HeatDemandForBuilding.cs" />
     <Compile Include="Helpers\TimeConverter.cs" />
     <Compile Include="HMA.cs">
       <SubType>Form</SubType>
