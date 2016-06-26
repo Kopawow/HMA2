@@ -1,6 +1,8 @@
 ﻿
 using System;
 using System.IO.Ports;
+using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using Modbus.Device;
 
 namespace HMA.Services
@@ -37,11 +39,15 @@ namespace HMA.Services
                     port.Dispose();
                 }
             }
-                
-             
-
-          
-          
         }
+
+      public static TimeSpan CalculateHeaterUseTime(double heaterEfficiency,double heaterPower, double powerNecessary,double loss)
+      {
+        double time = (powerNecessary/heaterEfficiency)/heaterPower;
+        var compensation = time*loss/1000;
+        var neededTime = (compensation + powerNecessary)/heaterEfficiency/heaterPower;
+        var timeValue = TimeSpan.FromSeconds(neededTime);
+        return timeValue;
+      }
     }
 }
