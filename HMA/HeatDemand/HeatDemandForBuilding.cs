@@ -27,19 +27,19 @@ namespace HMA.HeatDemand
 
         public double CalculateHeatDemandForBuilding(double outsideTemperature)
         {
-            return (PenetrationHeatLosses() + VentilationHeatLosses(outsideTemperature)) * 0.001;
+            return (PenetrationHeatLosses(outsideTemperature) + VentilationHeatLosses(outsideTemperature)) * 0.001;
         }
 
         // Qt,i [W]
-        private double PenetrationHeatLosses()
+        private double PenetrationHeatLosses(double outsideTemperature)
         {
-            var outerWall = PenetrationHeatLossesFactor(40, 3, 0.23, 0, 1);
+            var outerWall = PenetrationHeatLossesFactor(33, 3, 0.23, 0, 1);
             var outsideWindow = PenetrationHeatLossesFactor(11, 2, 1.6, 0.4, 1);
             var exteriorDoor = PenetrationHeatLossesFactor(1, 2, 2.6, 0.5, 1);
             var flatRoof = PenetrationHeatLossesFactor(10, 10, 0.24, 0.2, 1);
             var groundFloor = PenetrationHeatLossesFactor(10, 10, 0.35, 0.2, 0.5);
 
-            return outerWall + outsideWindow + exteriorDoor + flatRoof + groundFloor;
+            return (outerWall + outsideWindow + exteriorDoor + flatRoof + groundFloor)*(_internalTemperature - outsideTemperature);
         }
 
         // Qt,i [W]
@@ -63,7 +63,7 @@ namespace HMA.HeatDemand
         //Vi [m3/h]
         private double VentilationAirStream()  
         {
-            return Math.Min(InfiltrationAirStream(), MinimalHygieneAirStream());
+            return Math.Max(InfiltrationAirStream(), MinimalHygieneAirStream());
         }
 
         //Vinf,i [m3/h]

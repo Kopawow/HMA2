@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using HMA.HeatDemand;
 using HMA.Helpers;
 using HMA.MLA;
 using HMA.Models;
@@ -25,6 +26,7 @@ namespace HMA
     private double _predictWma;
     private bool currentState = true;
     private string selectedWeekday;
+    private HeatDemandForBuilding _heatDemand;
 
     public HMA()
     {
@@ -55,7 +57,7 @@ namespace HMA
       }
       else
       {
-        textBox1.Text = text;
+        tbTemperature.Text = text;
       }
     }
 
@@ -216,18 +218,32 @@ namespace HMA
       AppendTextBox(TimeConverter.ConvertFromDoubleToTime(_predictWma).ToString(), tbWma);
       AppendTextBox(TimeConverter.ConvertFromDoubleToTime(_predictRL).ToString(), tBRlPredictedValue);
       AppendTextBox(TimeConverter.ConvertFromDoubleToTime(_predictANN).ToString(), tbAnnPredictedValue);
-      var valueAnn = TimeSpan.Parse(tbAnnPredictedValue.Text, CultureInfo.InvariantCulture);
-      var newValue = new TimeSpan(0,valueAnn.Minutes,valueAnn.Seconds,0);
-      tbANNHeatingStart.Text ="00:"+
-        TimeSpan.FromSeconds(newValue.TotalSeconds-HeaterService.CalculateHeaterUseTime(0.8, 20, 17100,13500).TotalSeconds);
-      var valueWma = TimeSpan.Parse(tbWma.Text, CultureInfo.InvariantCulture);
-      var newValueWma = new TimeSpan(0, valueWma.Minutes, valueWma.Seconds, 0);
-      tbWmaHeatingStart.Text = "00:" +
-        TimeSpan.FromSeconds(newValueWma.TotalSeconds - HeaterService.CalculateHeaterUseTime(0.8, 20, 17100,13500).TotalSeconds);
-      var valueRl = TimeSpan.Parse(tbWma.Text, CultureInfo.InvariantCulture);
-      var newValueRl = new TimeSpan(0, valueRl.Minutes, valueRl.Seconds, 0);
-      tbRlStartHeating.Text = "00:" +
-        TimeSpan.FromSeconds(newValueRl.TotalSeconds - HeaterService.CalculateHeaterUseTime(0.8, 20, 17100,13500).TotalSeconds);
+
+      _heatDemand = new HeatDemandForBuilding();
+      var task = _weatherService.GetTodaysTemperature();
+      task.ContinueWith(x =>
+      {
+          SetText(task.Result.ToString(CultureInfo.InvariantCulture));
+
+          var heatLosses = _heatDemand.CalculateHeatDemandForBuilding(task.Result);
+          var powerNeeded = 300*1.2*1000*(21-task.Result)/1000;
+          var heatingTime = HeaterService.CalculateHeaterUseTime(0.8, 15, powerNeeded, heatLosses).TotalSeconds;
+          var valueAnn = TimeSpan.Parse(tbAnnPredictedValue.Text, CultureInfo.InvariantCulture);
+          var newValue = new TimeSpan(0, valueAnn.Minutes, valueAnn.Seconds, 0);
+          AppendTextBox("00:" +
+            TimeSpan.FromSeconds(newValue.TotalSeconds - heatingTime), tbANNHeatingStart);
+          var valueWma = TimeSpan.Parse(tbWma.Text, CultureInfo.InvariantCulture);
+          var newValueWma = new TimeSpan(0, valueWma.Minutes, valueWma.Seconds, 0);
+         AppendTextBox("00:" +
+            TimeSpan.FromSeconds(newValueWma.TotalSeconds - heatingTime), tbWmaHeatingStart);
+          var valueRl = TimeSpan.Parse(tbWma.Text, CultureInfo.InvariantCulture);
+          var newValueRl = new TimeSpan(0, valueRl.Minutes, valueRl.Seconds, 0);
+          AppendTextBox("00:" +
+            TimeSpan.FromSeconds(newValueRl.TotalSeconds - heatingTime), tbRlStartHeating);
+      }
+        );
+      
+     
     }
 
     private void bChangeHeaterState_Click(object sender, EventArgs e)

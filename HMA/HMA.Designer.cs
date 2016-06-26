@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tbTemperature = new System.Windows.Forms.TextBox();
             this.bGetWeather = new System.Windows.Forms.Button();
             this.License = new System.Windows.Forms.TextBox();
             this.bImHome = new System.Windows.Forms.Button();
@@ -50,20 +50,21 @@
             this.tbWmaHeatingStart = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
-            // textBox1
+            // tbTemperature
             // 
-            this.textBox1.Location = new System.Drawing.Point(172, 81);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 0;
+            this.tbTemperature.Location = new System.Drawing.Point(172, 81);
+            this.tbTemperature.Name = "tbTemperature";
+            this.tbTemperature.Size = new System.Drawing.Size(100, 20);
+            this.tbTemperature.TabIndex = 0;
             // 
             // bGetWeather
             // 
+            this.bGetWeather.Enabled = false;
             this.bGetWeather.Location = new System.Drawing.Point(15, 79);
             this.bGetWeather.Name = "bGetWeather";
-            this.bGetWeather.Size = new System.Drawing.Size(100, 23);
+            this.bGetWeather.Size = new System.Drawing.Size(141, 23);
             this.bGetWeather.TabIndex = 1;
-            this.bGetWeather.Text = "Pobierz Pogode";
+            this.bGetWeather.Text = "Aktualna temperatura";
             this.bGetWeather.UseVisualStyleBackColor = true;
             this.bGetWeather.Click += new System.EventHandler(this.bGetWeather_Click);
             // 
@@ -88,6 +89,7 @@
             // 
             // bANN
             // 
+            this.bANN.Enabled = false;
             this.bANN.Location = new System.Drawing.Point(172, 187);
             this.bANN.Name = "bANN";
             this.bANN.Size = new System.Drawing.Size(100, 23);
@@ -181,7 +183,7 @@
             // 
             this.bImOut.Location = new System.Drawing.Point(12, 8);
             this.bImOut.Name = "bImOut";
-            this.bImOut.Size = new System.Drawing.Size(103, 23);
+            this.bImOut.Size = new System.Drawing.Size(144, 23);
             this.bImOut.TabIndex = 18;
             this.bImOut.Text = "Wychodzę";
             this.bImOut.UseVisualStyleBackColor = true;
@@ -191,7 +193,7 @@
             // 
             this.bChangeHeaterState.Location = new System.Drawing.Point(12, 42);
             this.bChangeHeaterState.Name = "bChangeHeaterState";
-            this.bChangeHeaterState.Size = new System.Drawing.Size(103, 23);
+            this.bChangeHeaterState.Size = new System.Drawing.Size(144, 23);
             this.bChangeHeaterState.TabIndex = 19;
             this.bChangeHeaterState.Text = "Zmien stan pieca";
             this.bChangeHeaterState.UseVisualStyleBackColor = true;
@@ -199,6 +201,7 @@
             // 
             // bRL
             // 
+            this.bRL.Enabled = false;
             this.bRL.Location = new System.Drawing.Point(291, 187);
             this.bRL.Name = "bRL";
             this.bRL.Size = new System.Drawing.Size(100, 23);
@@ -209,6 +212,7 @@
             // 
             // bWma
             // 
+            this.bWma.Enabled = false;
             this.bWma.Location = new System.Drawing.Point(407, 187);
             this.bWma.Name = "bWma";
             this.bWma.Size = new System.Drawing.Size(100, 23);
@@ -255,7 +259,7 @@
             this.Controls.Add(this.bImHome);
             this.Controls.Add(this.License);
             this.Controls.Add(this.bGetWeather);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.tbTemperature);
             this.Name = "HMA";
             this.Text = "Heat Management Algorithm";
             this.ResumeLayout(false);
@@ -265,7 +269,7 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox tbTemperature;
         private System.Windows.Forms.Button bGetWeather;
         private System.Windows.Forms.TextBox License;
         private System.Windows.Forms.Button bImHome;
