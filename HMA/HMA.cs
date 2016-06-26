@@ -108,7 +108,7 @@ namespace HMA
 
     private void bExecuteAlgorthm_Click(object sender, EventArgs e)
     {
-      tbPredictedValue.Text = "";
+      tbAnnPredictedValue.Text = "";
       selectedWeekday = comboBox1.SelectedItem.ToString();
       RunANN();
     }
@@ -195,7 +195,7 @@ namespace HMA
     {
       tbWma.Text = "";
       tBRlPredictedValue.Text = "";
-      tbPredictedValue.Text = "";
+      tbAnnPredictedValue.Text = "";
       selectedWeekday = comboBox1.SelectedItem.ToString();
 
       var doPredictionsTask = new Task(() =>
@@ -215,10 +215,10 @@ namespace HMA
       doPredictionsTask.Wait();
       AppendTextBox(TimeConverter.ConvertFromDoubleToTime(_predictWma).ToString(), tbWma);
       AppendTextBox(TimeConverter.ConvertFromDoubleToTime(_predictRL).ToString(), tBRlPredictedValue);
-      AppendTextBox(TimeConverter.ConvertFromDoubleToTime(_predictANN).ToString(), tbPredictedValue);
-      var valueAnn = TimeSpan.Parse(tbPredictedValue.Text, CultureInfo.InvariantCulture);
+      AppendTextBox(TimeConverter.ConvertFromDoubleToTime(_predictANN).ToString(), tbAnnPredictedValue);
+      var valueAnn = TimeSpan.Parse(tbAnnPredictedValue.Text, CultureInfo.InvariantCulture);
       var newValue = new TimeSpan(0,valueAnn.Minutes,valueAnn.Seconds,0);
-      tbHeatingStart.Text ="00:"+
+      tbANNHeatingStart.Text ="00:"+
         TimeSpan.FromSeconds(newValue.TotalSeconds-HeaterService.CalculateHeaterUseTime(0.8, 20, 17100,13500).TotalSeconds);
       var valueWma = TimeSpan.Parse(tbWma.Text, CultureInfo.InvariantCulture);
       var newValueWma = new TimeSpan(0, valueWma.Minutes, valueWma.Seconds, 0);
