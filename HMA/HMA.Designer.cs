@@ -27,8 +27,7 @@
     /// the contents of this method with the code editor.
     /// </summary>
     private void InitializeComponent()
-    {
-<<<<<<< HEAD
+        { 
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.bGetWeather = new System.Windows.Forms.Button();
             this.License = new System.Windows.Forms.TextBox();
@@ -40,7 +39,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.tbDemandingTemperature = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.tbAnimaStartHeating = new System.Windows.Forms.TextBox();
             this.tBRlPredictedValue = new System.Windows.Forms.TextBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.bImOut = new System.Windows.Forms.Button();
@@ -48,7 +46,6 @@
             this.bRL = new System.Windows.Forms.Button();
             this.bWma = new System.Windows.Forms.Button();
             this.tbWma = new System.Windows.Forms.TextBox();
-            this.wbWmaHeatingStart = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // textBox1
@@ -147,14 +144,7 @@
             this.label4.Size = new System.Drawing.Size(110, 13);
             this.label4.TabIndex = 13;
             this.label4.Text = "Żądana Temperatura:";
-            // 
-            // tbAnimaStartHeating
-            // 
-            this.tbAnimaStartHeating.Location = new System.Drawing.Point(291, 135);
-            this.tbAnimaStartHeating.Name = "tbAnimaStartHeating";
-            this.tbAnimaStartHeating.Size = new System.Drawing.Size(100, 20);
-            this.tbAnimaStartHeating.TabIndex = 16;
-            // 
+             // 
             // tBRlPredictedValue
             // 
             this.tBRlPredictedValue.Location = new System.Drawing.Point(291, 161);
@@ -166,7 +156,7 @@
             // 
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
-=======
+
       this.textBox1 = new System.Windows.Forms.TextBox();
       this.bGetWeather = new System.Windows.Forms.Button();
       this.License = new System.Windows.Forms.TextBox();
@@ -302,7 +292,7 @@
       // 
       this.comboBox1.FormattingEnabled = true;
       this.comboBox1.Items.AddRange(new object[] {
->>>>>>> c162c36d57f901d51729139b3fac7e1e48206f40
+
             "Poniedziałek",
             "Wtorek",
             "Środa",
@@ -310,7 +300,7 @@
             "Piątek",
             "Sobota",
             "Niedziela"});
-<<<<<<< HEAD
+
             this.comboBox1.Location = new System.Drawing.Point(270, 12);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 21);
@@ -363,25 +353,16 @@
             this.tbWma.Size = new System.Drawing.Size(100, 20);
             this.tbWma.TabIndex = 21;
             // 
-            // wbWmaHeatingStart
-            // 
-            this.wbWmaHeatingStart.Location = new System.Drawing.Point(407, 135);
-            this.wbWmaHeatingStart.Name = "wbWmaHeatingStart";
-            this.wbWmaHeatingStart.Size = new System.Drawing.Size(100, 20);
-            this.wbWmaHeatingStart.TabIndex = 22;
-            // 
             // HMA
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(519, 261);
-            this.Controls.Add(this.wbWmaHeatingStart);
             this.Controls.Add(this.tbWma);
             this.Controls.Add(this.bWma);
             this.Controls.Add(this.bChangeHeaterState);
             this.Controls.Add(this.bImOut);
             this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.tbAnimaStartHeating);
             this.Controls.Add(this.tBRlPredictedValue);
             this.Controls.Add(this.bRL);
             this.Controls.Add(this.label4);
@@ -399,7 +380,7 @@
             this.Text = "Heat Management Algorithm";
             this.ResumeLayout(false);
             this.PerformLayout();
-=======
+
       this.comboBox1.Location = new System.Drawing.Point(172, 12);
       this.comboBox1.Name = "comboBox1";
       this.comboBox1.Size = new System.Drawing.Size(121, 21);
@@ -488,7 +469,6 @@
       this.Text = "Heat Management Algorithm";
       this.ResumeLayout(false);
       this.PerformLayout();
->>>>>>> c162c36d57f901d51729139b3fac7e1e48206f40
 
     }
 

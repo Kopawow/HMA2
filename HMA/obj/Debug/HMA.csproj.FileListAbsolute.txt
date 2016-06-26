@@ -60,3 +60,7 @@ C:\Users\cieka\Documents\HMA2\HMA\obj\Debug\HMA.Properties.Resources.resources
 C:\Users\cieka\Documents\HMA2\HMA\obj\Debug\HMA.csproj.GenerateResource.Cache
 C:\Users\cieka\Documents\HMA2\HMA\obj\Debug\HMA.exe
 C:\Users\cieka\Documents\HMA2\HMA\obj\Debug\HMA.pdb
+C:\Users\cieka\OneDrive\Dokumenty\HMA2\HMA\obj\Debug\HMA.csprojResolveAssemblyReference.cache
+C:\Users\cieka\OneDrive\Dokumenty\HMA2\HMA\obj\Debug\HMA.HMA.resources
+C:\Users\cieka\OneDrive\Dokumenty\HMA2\HMA\obj\Debug\HMA.Properties.Resources.resources
+C:\Users\cieka\OneDrive\Dokumenty\HMA2\HMA\obj\Debug\HMA.csproj.GenerateResource.Cache
